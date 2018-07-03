@@ -23,7 +23,7 @@ typedef enum{
 
 /*駆動モード*/
 typedef enum{
-  STOP,FORWARD,BAKCWARD,BRAKE,
+  STOP,FORWARD,BACKWARD,BRAKE,
 }driveMode_t;
 
 int readSensor(sensorKind_t); /*指定センサーの値を読み取る*/
