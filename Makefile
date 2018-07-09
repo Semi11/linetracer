@@ -8,19 +8,19 @@
 
 # 生成するファイルとソースファイルの指定
 # 1. 生成するオブジェクトのファイル名を指定
-TARGET = 
+TARGET = test
 # 2. 生成に必要なCのファイル名を空白で区切って並べる
-SOURCE_C = 
+SOURCE_C =  $(wildcard Src/*.c)
 # 3. 生成に必要なアセンブラのファイル名を空白で区切って並べる
 #	(スタートアップルーチンは除く)
-SOURCE_ASM = 
+SOURCE_ASM =
 
 # 生成するオブジェクトの種類を指定
 #	(※の項目は通常変更する必要がない)
 #
 # 1. GDBによるリモートデバッキング指定(当面、サポートしない)
 #	true : 指定する		その他：指定しない
-REMOTE_DBG = 
+REMOTE_DBG =
 
 # 2. RAM上デバッグまたはROM化指定 ※
 #	ram : RAM上で実行	rom : ROM化
@@ -45,7 +45,7 @@ USE_GDB = true
 #	jcomp：情報工学科計算機システム
 #	指定なし：以下のパスの設定に従う
 	COMP_SYS = jcomp
-# COMP_SYS = 
+# COMP_SYS =
 #
 # 1. クロス環境のバイナリが置かれているパスの指定
 #	回路システム実験室ではこちらのディレクトリ
@@ -89,7 +89,8 @@ OUTPUT_FORMAT = -O srec --srec-forceS3
 #
 # インクルードディレクトリの追加("*****.h"指定のみ有効)
 #INCLUDES = -I./include
-INCLUDES = -I./
+#INCLUDES = -I./
+INCLUDES = -I./Inc
 # コンパイラオプションの指定
 #	-mh：H8/300Hシリーズ指定
 #	-mrelax：条件分岐コードの最適化
@@ -148,12 +149,14 @@ LDFLAGS = -T $(LDSCRIPT) -nostartfiles -Wl,-Map,$(MAP_FILE)
 #
 # オブジェクトの指定
 #
-OBJ = $(STARTUP:.s=.o) $(SOURCE_C:.c=.o) $(SOURCE_ASM:.s=.o)
+OBJDIR = ./Obj
+H8_LIB = $(wildcard ./H8_lib/*.o)
+OBJ = $(addprefix $(OBJDIR)/, $(notdir $(STARTUP:.s=.o) $(SOURCE_C:.c=.o) $(SOURCE_ASM:.s=.o))) $(H8_LIB)
 
 #
 # サフィックスルール適用の拡張子指定
 #
-.SUFFIXES: .c .s .o 
+.SUFFIXES: .c .s .o
 
 #
 # ルール
