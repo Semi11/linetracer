@@ -8,9 +8,10 @@
 
 # 生成するファイルとソースファイルの指定
 # 1. 生成するオブジェクトのファイル名を指定
-TARGET = test
+TARGET = test.mot
 # 2. 生成に必要なCのファイル名を空白で区切って並べる
-SOURCE_C =  $(wildcard Src/*.c)
+SRCDIR = ./Src
+SOURCE_C =  $(wildcard $(SRCDIR)/*.c)
 # 3. 生成に必要なアセンブラのファイル名を空白で区切って並べる
 #	(スタートアップルーチンは除く)
 SOURCE_ASM =
@@ -44,7 +45,7 @@ USE_GDB = true
 # 0. 計算機システムの指定
 #	jcomp：情報工学科計算機システム
 #	指定なし：以下のパスの設定に従う
-	COMP_SYS = jcomp
+COMP_SYS = jcomp
 # COMP_SYS =
 #
 # 1. クロス環境のバイナリが置かれているパスの指定
@@ -60,7 +61,7 @@ LIB_PATH = /home/wasaki/h8/standard-set/3069
 # 情報工学科計算機システムの指定があるとき、パスは以下の設定になる
 ifeq ($(COMP_SYS), jcomp)
 	CMD_PATH = /usr/local/bin
-	LIB_PATH = .
+	LIB_PATH = ./bin
 #	LIB_PATH = /home/class/common/h8-3069
 #	LIB_PATH = /home/jugyou/j4/h8-3069
 endif
@@ -90,7 +91,8 @@ OUTPUT_FORMAT = -O srec --srec-forceS3
 # インクルードディレクトリの追加("*****.h"指定のみ有効)
 #INCLUDES = -I./include
 #INCLUDES = -I./
-INCLUDES = -I./Inc
+INC = ./Inc ./H8_LIB
+INCLUDES = $(foreach d, $(INC), -I$d)
 # コンパイラオプションの指定
 #	-mh：H8/300Hシリーズ指定
 #	-mrelax：条件分岐コードの最適化
@@ -151,7 +153,7 @@ LDFLAGS = -T $(LDSCRIPT) -nostartfiles -Wl,-Map,$(MAP_FILE)
 #
 OBJDIR = ./Obj
 H8_LIB = $(wildcard ./H8_lib/*.o)
-OBJ = $(addprefix $(OBJDIR)/, $(notdir $(STARTUP:.s=.o) $(SOURCE_C:.c=.o) $(SOURCE_ASM:.s=.o))) $(H8_LIB)
+OBJ = $(addprefix $(OBJDIR)/, $(notdir $(SOURCE_C:.c=.o) $(SOURCE_ASM:.s=.o))) $(STARTUP:.s=.o) $(H8_LIB:.c=.o)
 
 #
 # サフィックスルール適用の拡張子指定
@@ -167,6 +169,9 @@ $(TARGET) : $(TARGET_COFF)
 $(TARGET_COFF) : $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o $(TARGET_COFF)
 	$(SIZE) -Ax $(TARGET_COFF)
+
+$(OBJDIR)/%.o : $(SRCDIR)/%.c $(SOURCE_ASM)
+	$(CC) -c $(CFLAGS) $<
 
 clean :
 	rm -f *.o $(TARGET) $(TARGET_COFF) $(MAP_FILE)
