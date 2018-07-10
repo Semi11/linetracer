@@ -10,12 +10,6 @@
 
 #define PWM_MAX 1000
 
-/*モータのパラメータ(現在のモータの情報ではない)*/
-typedef struct{
-  int duty,
-  driveMode mode,
-}motorParam_t;
-
 /*センサー指定用*/
 typedef enum{
   LEFT, RIGHT,
@@ -25,6 +19,12 @@ typedef enum{
 typedef enum{
   STOP,FORWARD,BACKWARD,BRAKE,
 }driveMode_t;
+
+/*モータのパラメータ(現在のモータの情報ではない)*/
+typedef struct{
+  int duty;
+  driveMode_t mode;
+}motorParam_t;
 
 int readSensor(sensorKind_t); /*指定センサーの値を読み取る*/
 void pwmProc(void); /*割り込みハンドラ モータ情報をもとにモータの駆動を指定*/
