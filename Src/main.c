@@ -6,6 +6,7 @@
 
 #include "driver.h"
 #include "control.h"
+#include "ad_read.h"
 
 /* タイマ割り込みの時間間隔[μs] */
 #define TIMER0 1000
@@ -20,8 +21,6 @@
 static volatile int adTime, pwmTime, ctlTime;
 
 void int_imia0(void);
-void int_adi(void);
-int  ad_read(int ch);
 
 int main(void)
 {
@@ -81,4 +80,3 @@ void int_imia0(void)
   timer_intflag_reset(0); /* 割り込みフラグをクリア */
   ENINT();                /* CPUを割り込み許可状態に */
 }
-
