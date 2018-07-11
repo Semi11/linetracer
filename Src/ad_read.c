@@ -1,5 +1,5 @@
-#include "h8-3052-iodef.h"
-#include "h8-3052-int.h"
+#include "h8-3069-iodef.h"
+#include "h8-3069-int.h"
 
 #include "ad.h"
 #include "ad_read.h"
