@@ -8,7 +8,7 @@
 
 # 生成するファイルとソースファイルの指定
 # 1. 生成するオブジェクトのファイル名を指定
-TARGET = ./bin/test.mot
+TARGET = bin/test.mot
 # 2. 生成に必要なCのファイル名を空白で区切って並べる
 SRCDIR = ./Src
 SOURCE_C =  $(wildcard $(SRCDIR)/*.c)
@@ -171,8 +171,8 @@ $(TARGET_COFF) : $(OBJ)
 	$(SIZE) -Ax $(TARGET_COFF)
 
 $(OBJDIR)/%.o : $(SRCDIR)/%.c $(SOURCE_ASM)
-	-mkdir -p $(OBJDIR)
-	$(CC) -c $(CFLAGS) $<
+	mkdir -p $(OBJDIR)
+	$(CC) -c $(CFLAGS) $(INCLUDE) -o $@ -c $<
 
 clean :
 	rm -f *.o $(TARGET) $(TARGET_COFF) $(MAP_FILE)
