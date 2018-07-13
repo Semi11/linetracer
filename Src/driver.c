@@ -1,11 +1,7 @@
 /*driver.c*/
-<<<<<<< HEAD
-#include"../Inc/driver.h"
-void driveMotor(driveMode_t, int);
-=======
+
 #include "driver.h"
 
->>>>>>> 61a5a13465ea0c66ed1fc7fd868c17cdf268c36f
 /*各モータのパラメータを初期化*/
 motorParam_t motorParamList[MOTOR_NUM] = {
   {
@@ -17,6 +13,21 @@ motorParam_t motorParamList[MOTOR_NUM] = {
     .mode = STOP,
   },
 };
+
+int readSensor(sensorKind_t kind)
+{
+  
+  if(kind == LEFT){
+    if(ad_read(1) < 128) return 1;
+    else return 0;
+  }
+  else if(kind == RIGHT){
+    if(ad_read(2) < 128) return 1;
+    else return 0;
+  }else {
+    return -1;
+  }
+}
 
 void driveMotor(driveMode_t motor, int move){
   swich(motor){
@@ -57,6 +68,7 @@ void driveMotor(driveMode_t motor, int move){
     }
     break;
   }
+}
 
 void pwmProc(void)
 {
