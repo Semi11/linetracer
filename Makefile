@@ -152,7 +152,7 @@ LDFLAGS = -T $(LDSCRIPT) -nostartfiles -Wl,-Map,$(MAP_FILE)
 # オブジェクトの指定
 #
 OBJDIR = ./Obj
-H8_LIBS = $(wildcard ./H8_LIB/*.o)
+H8_LIBS = $(wildcard ./H8_LIB/*.c)
 OBJ = $(H8_LIBS:.c=.o) $(addprefix $(OBJDIR)/, $(notdir $(SOURCE_C:.c=.o) $(SOURCE_ASM:.s=.o))) $(STARTUP:.s=.o)
 
 #
@@ -170,17 +170,17 @@ $(TARGET_COFF) : $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o $(TARGET_COFF)
 	$(SIZE) -Ax $(TARGET_COFF)
 
-$(OBJDIR)/%.o : $(SRCDIR)/%.c $(SOURCE_ASM)
+$(OBJDIR)/%.o : $(SRCDIR)/%.c
 	mkdir -p $(OBJDIR)
-	$(CC) -c $(CFLAGS) $(INCLUDE) -o $@ -c $<
+	$(CC) -c $(CFLAGS) $(INCLUDE) -o $@ $<
 
 clean :
-	rm -f *.o $(TARGET) $(TARGET_COFF) $(MAP_FILE)
+	rm -f *.o $(TARGET) $(TARGET_COFF) $(MAP_FILE) $(OBJ)
 
 #
 # サフィックスルール
 #
 .c.o:
-	$(CC) -c $(CFLAGS) $<
+	$(CC) -c $(CFLAGS) -o $@ $<
 .s.o:
-	$(CC) -c $(CFLAGS) $<
+	$(CC) -c $(CFLAGS) -o $@ $<
