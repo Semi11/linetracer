@@ -152,8 +152,8 @@ LDFLAGS = -T $(LDSCRIPT) -nostartfiles -Wl,-Map,$(MAP_FILE)
 # オブジェクトの指定
 #
 OBJDIR = ./Obj
-H8_LIB = $(wildcard ./H8_lib/*.o)
-OBJ = $(addprefix $(OBJDIR)/, $(notdir $(SOURCE_C:.c=.o) $(SOURCE_ASM:.s=.o))) $(STARTUP:.s=.o) $(H8_LIB:.c=.o)
+H8_LIBS = $(wildcard ./H8_LIB/*.o)
+OBJ = $(H8_LIBS:.c=.o) $(addprefix $(OBJDIR)/, $(notdir $(SOURCE_C:.c=.o) $(SOURCE_ASM:.s=.o))) $(STARTUP:.s=.o)
 
 #
 # サフィックスルール適用の拡張子指定

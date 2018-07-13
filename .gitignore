@@ -2,3 +2,4 @@ bin/*
 H8_LIB/*
 *.o
 *.map
+tmp/*
