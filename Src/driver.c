@@ -1,15 +1,20 @@
 /*driver.c*/
+<<<<<<< HEAD
 #include"../Inc/driver.h"
 void driveMotor(driveMode_t, int);
+=======
+#include "driver.h"
+
+>>>>>>> 61a5a13465ea0c66ed1fc7fd868c17cdf268c36f
 /*各モータのパラメータを初期化*/
 motorParam_t motorParamList[MOTOR_NUM] = {
   {
-    .duty = 0;
-    .mode = STOP;
+    .duty = 0,
+    .mode = STOP,
   },
   {
-    .duty = 0;
-    .mode = STOP;
+    .duty = 0,
+    .mode = STOP,
   },
 };
 
@@ -53,4 +58,21 @@ void driveMotor(driveMode_t motor, int move){
     break;
   }
 
+void pwmProc(void)
+{
+  static int pwmCount;
+  int i;
+
+  for (i = 0; i < MOTOR_NUM; i++) {
+    if (pwmCount < motorParamList[i].duty * PWM_MAX / 100) {
+      driveMotor(motorParamList[i].mode, i);
+    } else {
+      driveMotor(STOP, i);
+    }
+  }
+
+  pwmCount++;
+  if (pwmCount >= PWM_MAX) {
+    pwmCount = 0;
+  }
 }
