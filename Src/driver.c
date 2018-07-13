@@ -19,9 +19,11 @@ int readSensor(sensorKind_t kind)
     if(ad_read(1) < 128) return 1;
     else return 0;
   }
-  if(kind == RIGHT){
+  else if(kind == RIGHT){
     if(ad_read(2) < 128) return 1;
     else return 0;
+  }else {
+    return -1;
   }
   
 }
