@@ -3,10 +3,21 @@
 #include "control.h"
 
 void controlMotor(void){
-  int i;
 
-  for(i=0;i<MOTOR_NUM;i++){
-    motorParamList[i].duty = 30;
-    motorParamList[i].mode = FORWARD;
+  if(readSensor(LEFT)){
+    motorParamList[MOTOR_L].duty = 60;
+    motorParamList[MOTOR_L].mode = FORWARD;
+  }else{
+    motorParamList[MOTOR_L].duty = 0;
+    motorParamList[MOTOR_L].mode = STOP;
   }
+
+  if(readSensor(RIGHT)){
+    motorParamList[MOTOR_R].duty = 60;
+    motorParamList[MOTOR_R].mode = FORWARD;
+  }else{
+    motorParamList[MOTOR_R].duty = 0;
+    motorParamList[MOTOR_R].mode = STOP;
+  }
+
 }
