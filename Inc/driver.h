@@ -8,7 +8,7 @@
 #define MOTOR_L 0
 #define MOTOR_R 1
 
-#define PWM_MAX 1000
+#define PWM_MAX 100
 
 /*センサー指定用*/
 typedef enum{
