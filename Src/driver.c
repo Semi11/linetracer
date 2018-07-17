@@ -40,7 +40,7 @@ void driveMotor(driveMode_t motor, int move){
       PBDR &= 0xf3;
     }
     break;
-    case BACKWARD:
+    case FORWARD:
     if(move == MOTOR_L){
       PBDR &= 0xfd;
       PBDR |= 0x01;
@@ -49,7 +49,7 @@ void driveMotor(driveMode_t motor, int move){
       PBDR |= 0x04;
     }
     break;
-    case FORWARD:
+    case BACKWARD:
     if(move == MOTOR_L){
       PBDR &= 0xfe;
       PBDR |= 0x02;

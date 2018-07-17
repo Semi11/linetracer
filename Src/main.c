@@ -30,6 +30,7 @@ int main(void)
   /* 割り込みで使用する大域変数の初期化 */
   pwmTime = 0;     /* PWM制御関連 */
   adTime = 0;                  /* A/D変換関連 */
+  ctlTime = 0;
 
   ad_init();           /* A/Dの初期化 */
   timer_init();        /* タイマの初期化 */
@@ -38,7 +39,7 @@ int main(void)
   ENINT();             /* 全割り込み受付可 */
 
   /* bポート初期化 */
-  PBDDR = 0x04;
+  PBDDR = 0x0F;
 
   while(1);
 
