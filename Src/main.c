@@ -1,13 +1,8 @@
-#include "h8-3069-iodef.h"
 #include "h8-3069-int.h"
-
-#include "ad.h"
-#include "timer.h"
 
 #include "driver.h"
 #include "control.h"
 #include "ad_read.h"
-
 
 /* 割り込み処理に必要な変数 */
 static volatile int adTime, pwmTime, ctlTime;

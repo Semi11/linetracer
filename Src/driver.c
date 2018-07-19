@@ -1,5 +1,9 @@
 /*driver.c*/
 #include "h8-3069-iodef.h"
+#include "h8-3069-int.h"
+
+#include "timer.h"
+#include "ad.h"
 
 #include "driver.h"
 #include "ad_read.h"
@@ -89,7 +93,7 @@ void updateMotorState(driveMode_t mode, int motorKind){
 
   volatile int waitTime = waitCount * TIMER0 * PWMTIME;
 
-  if(mode != STOP && old_mode != STOP && old_mode != mode){
+  if(mode != STOP && old_mode[motorKind] != STOP && old_mode[motorKind] != mode){
     waitCount = 0;
   }
 
