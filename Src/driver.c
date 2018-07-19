@@ -44,41 +44,43 @@ int readSensor(sensorKind_t kind)
   }
 }
 
-void driveMotor(driveMode_t motor, int move){
-  switch(motor){
+void driveMotor(driveMode_t mode, int motorKind){
+  switch(mode){
     case STOP:
-    if(move == MOTOR_L){
-      PBDR &= 0xfc;
-    }else if(move == MOTOR_R){
-      PBDR &= 0xf3;
-    }
-    break;
+      if(motorKind == MOTOR_L){
+        PBDR &= 0xfc;
+      }else if(motorKind == MOTOR_R){
+        PBDR &= 0xf3;
+      }
+      break;
     case FORWARD:
-    if(move == MOTOR_L){
-      PBDR &= 0xfd;
-      PBDR |= 0x01;
-    }else if(move == MOTOR_R){
-      PBDR &= 0xf7;
-      PBDR |= 0x04;
-    }
-    break;
+      if(motorKind == MOTOR_L){
+        PBDR &= 0xfd;
+        PBDR |= 0x01;
+      }else if(motorKind == MOTOR_R){
+        PBDR &= 0xf7;
+        PBDR |= 0x04;
+      }
+      break;
     case BACKWARD:
-    if(move == MOTOR_L){
-      PBDR &= 0xfe;
-      PBDR |= 0x02;
-    }else if(move == MOTOR_R){
-      PBDR &= 0xfb;
-      PBDR |= 0x08;
-    }
-    break;
+      if(motorKind == MOTOR_L){
+        PBDR &= 0xfe;
+        PBDR |= 0x02;
+      }else if(motorKind == MOTOR_R){
+        PBDR &= 0xfb;
+        PBDR |= 0x08;
+      }
+      break;
     case BRAKE:
-    if(move == MOTOR_L){
-      PBDR |= 0x03;
-    }else if(move == MOTOR_R){
-      PBDR |= 0x0c;
-    }
-    break;
+      if(motorKind == MOTOR_L){
+        PBDR |= 0x03;
+      }else if(motorKind == MOTOR_R){
+        PBDR |= 0x0c;
+      }
+      break;
+    default:break;
   }
+
 }
 
 void pwmProc(void)
