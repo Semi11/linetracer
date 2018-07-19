@@ -83,6 +83,26 @@ void driveMotor(driveMode_t mode, int motorKind){
 
 }
 
+void updateMotorState(driveMode_t mode, int motorKind){
+  static int waitCount = MODE_CHANGE_TIME / (TIMER0 * PWMTIME) + 1;
+  static driveMode_t old_mode[MOTOR_NUM] = {STOP,STOP};
+
+  volatile int waitTime = waitCount * TIMER0 * PWMTIME;
+
+  if(mode != STOP && old_mode != STOP && old_mode != mode){
+    waitCount = 0;
+  }
+
+  if(waitTime < MODE_CHANGE_TIME){
+    mode = STOP;
+    waitCount++;
+  }
+
+  driveMotor(mode, motorKind);
+
+  old_mode[motorKind] = mode;
+}
+
 void pwmProc(void)
 {
   static int pwmCount;
@@ -90,9 +110,9 @@ void pwmProc(void)
 
   for (i = 0; i < MOTOR_NUM; i++) {
     if (pwmCount < motorParamList[i].duty * PWM_MAX / 100) {
-      driveMotor(motorParamList[i].mode, i);
+      updateMotorState(motorParamList[i].mode, i);
     } else {
-      driveMotor(STOP, i);
+      updateMotorState(STOP, i);
     }
   }
 
