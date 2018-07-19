@@ -9,7 +9,7 @@
 #include "ad_read.h"
 
 /* タイマ割り込みの時間間隔[μs] */
-#define TIMER0 1000
+#define TIMER0 100
 
 /* 割り込み処理で各処理を行う頻度を決める定数 */
 #define ADTIME  2
