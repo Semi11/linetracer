@@ -4,6 +4,17 @@
 
 #define MOTOR_NUM 2
 
+/* タイマ割り込みの時間間隔[μs] */
+#define TIMER0 100
+
+/* 割り込み処理で各処理を行う頻度を決める定数 */
+#define ADTIME  2
+#define PWMTIME 1
+#define CONTROLTIME 10
+
+
+/* 割り込み処理に必要な変数 */
+static volatile int adTime, pwmTime, ctlTime;
 /*モータのインデックス*/
 #define MOTOR_L 0
 #define MOTOR_R 1
@@ -28,6 +39,7 @@ typedef struct{
   driveMode_t mode;
 }motorParam_t;
 
+void init(void); /*初期化*/
 int readSensor(sensorKind_t); /*指定センサーの値を読み取る*/
 void pwmProc(void); /*割り込みハンドラ モータ情報をもとにモータの駆動を指定*/
 void driveMotor(driveMode_t, int); /*指定モータを指定モードで駆動させる*/

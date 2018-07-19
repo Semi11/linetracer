@@ -4,6 +4,19 @@
 #include "driver.h"
 #include "ad_read.h"
 
+void init(void){
+  ROMEMU();           /* ROMエミュレーションをON */
+
+  ad_init();           /* A/Dの初期化 */
+  timer_init();        /* タイマの初期化 */
+  timer_set(0,TIMER0); /* タイマ0の時間間隔をセット */
+  timer_start(0);      /* タイマ0スタート */
+  ENINT();             /* 全割り込み受付可 */
+
+  /* bポート初期化 */
+  PBDDR = 0x0F;
+}
+
 /*各モータのパラメータを初期化*/
 motorParam_t motorParamList[MOTOR_NUM] = {
   {
