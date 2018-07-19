@@ -9,6 +9,9 @@
 #include "ad_read.h"
 
 
+/* 割り込み処理に必要な変数 */
+static volatile int adTime, pwmTime, ctlTime;
+
 void int_imia0(void);
 
 int main(void)

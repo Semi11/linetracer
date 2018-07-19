@@ -15,8 +15,6 @@
 /* モータの駆動モード変更時に貫通電流対策のために必要な待ち時間[μs] */
 #define MODE_CHANGE_TIME 100
 
-/* 割り込み処理に必要な変数 */
-static volatile int adTime, pwmTime, ctlTime;
 /*モータのインデックス*/
 #define MOTOR_L 0
 #define MOTOR_R 1
