@@ -14,11 +14,8 @@ void init(void){
   ad_init();           /* A/Dの初期化 */
   timer_init();        /* タイマの初期化 */
   timer_set(0,TIMER0); /* タイマ0の時間間隔をセット */
-  timer_start(0);      /* タイマ0スタート */
-  ENINT();             /* 全割り込み受付可 */
-
-  /* bポート初期化 */
-  PBDDR = 0x0F;
+  PBDDR = 0x0F; /* bポート初期化 */
+  P6DDR = 0x00; /* P6ポート初期化 */
 }
 
 /*各モータのパラメータを初期化*/

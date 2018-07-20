@@ -1,4 +1,8 @@
 #include "h8-3069-int.h"
+#include "h8-3069-iodef.h"
+
+#include "timer.h"
+#include "ad.h"
 
 #include "driver.h"
 #include "control.h"
@@ -11,8 +15,12 @@ void int_imia0(void);
 
 int main(void)
 {
-  /* ハードの初期化 */
-  init();
+  init(); /* ハードの初期化 */
+
+  while((P6DR & 0x01) != 0x00); /* スイッチがおされるまで待機 */
+
+  timer_start(0);      /* タイマ0スタート */
+  ENINT();             /* 全割り込み受付可 */
 
   /* 割り込みで使用する大域変数の初期化 */
   pwmTime = 0; /* PWM制御関連 */
