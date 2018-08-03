@@ -5,7 +5,7 @@
 #define MOTOR_NUM 2
 
 /* タイマ割り込みの時間間隔[μs] */
-#define TIMER0 100
+#define TIMER0 256
 
 /* 割り込み処理で各処理を行う頻度を決める定数 */
 #define ADTIME  2
@@ -21,7 +21,7 @@
 
 #define PWM_MAX 100
 
-#define THRESHOLD_VALUE 200
+#define THRESHOLD_VALUE 175
 
 /*センサー指定用*/
 typedef enum{
