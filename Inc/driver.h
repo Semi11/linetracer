@@ -21,7 +21,8 @@
 
 #define PWM_MAX 100
 
-#define THRESHOLD_VALUE 175
+#define LEFT_THRESHOLD_VALUE  190
+#define RIGHT_THRESHOLD_VALUE 210
 
 /*センサー指定用*/
 typedef enum{

@@ -34,11 +34,11 @@ int readSensor(sensorKind_t kind)
 {
 
   if(kind == LEFT){
-    if(ad_read(1) < THRESHOLD_VALUE) return 1;
+    if(ad_read(1) < LEFT_THRESHOLD_VALUE) return 1;
     else return 0;
   }
   else if(kind == RIGHT){
-    if(ad_read(2) < THRESHOLD_VALUE) return 1;
+    if(ad_read(2) < RIGHT_THRESHOLD_VALUE) return 1;
     else return 0;
   }else {
     return -1;
