@@ -8,7 +8,7 @@ void controlMotor(void){
 
   static char isLeftOffLine, isRightOffLine;
   // 初期のノイズをカットする。
-  static int temp = 100;;
+  static int temp = 100;
   static int offlineCount;
   static char curveCount;
 
@@ -17,14 +17,14 @@ void controlMotor(void){
 
   if (isLeftOffLine && isRightOffLine) {
     if (offlineCount != 50) offlineCount++;
-    motorParamList[MOTOR_L].duty = 65;
-    motorParamList[MOTOR_L].mode = curve[curveCount % 7] ? BACKWARD : FORWARD;
-    motorParamList[MOTOR_R].duty = 65;
+    motorParamList[MOTOR_R].duty = 50;
     motorParamList[MOTOR_R].mode = curve[curveCount % 7] ? FORWARD : BACKWARD;
+    motorParamList[MOTOR_L].duty = 50;
+    motorParamList[MOTOR_L].mode = curve[curveCount % 7] ? BACKWARD : FORWARD;
   } else {
     if (temp != 10) temp++;
     // 初期のノイズをカットする。
-    if (temp > 200) {
+    if (temp > 400) {
       offlineCount = 0;
       temp = 0;
     }
@@ -34,19 +34,19 @@ void controlMotor(void){
       offlineCount = 0;
     }
 
-    if (isRightOffLine) {
-      motorParamList[MOTOR_L].duty = 0;
-      motorParamList[MOTOR_L].mode = STOP;
-    } else {
-      motorParamList[MOTOR_L].duty = 65;
-      motorParamList[MOTOR_L].mode = FORWARD;
-    }
     if (isLeftOffLine) {
       motorParamList[MOTOR_R].duty = 0;
       motorParamList[MOTOR_R].mode = STOP;
     } else {
-      motorParamList[MOTOR_R].duty = 65;
+      motorParamList[MOTOR_R].duty = 50;
       motorParamList[MOTOR_R].mode = FORWARD;
+    }
+    if (isRightOffLine) {
+      motorParamList[MOTOR_L].duty = 0;
+      motorParamList[MOTOR_L].mode = STOP;
+    } else {
+      motorParamList[MOTOR_L].duty = 50;
+      motorParamList[MOTOR_L].mode = FORWARD;
     }
   }
 
