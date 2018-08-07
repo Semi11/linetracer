@@ -5,7 +5,7 @@
 #define MOTOR_NUM 2
 
 /* タイマ割り込みの時間間隔[μs] */
-#define TIMER0 256
+#define TIMER0 1000
 
 /* 割り込み処理で各処理を行う頻度を決める定数 */
 #define ADTIME  2
